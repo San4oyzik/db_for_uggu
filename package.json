@@ -1,0 +1,12 @@
+{
+  "name": "db_for_uggu",
+  "version": "1.0.0",
+  "description": "Репо для задач по предмету, управление данными",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
