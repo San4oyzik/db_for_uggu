@@ -4,6 +4,14 @@ const mysql = require('mysql');
 const app = express();
 const port = 3006;
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 // Настройка подключения к БД
 const db = mysql.createConnection({
   host: 'sql11.freemysqlhosting.net',
@@ -22,10 +30,14 @@ db.connect(err => {
   console.log('Успешное подключение к базе данных!');
 })
 
+
+
 app.get('/', (req, res) => {
   res.send('Сервер запущен! Введи в адресную строку /api/getdata для получения данных из базы данных')
 })
 
+
+// Получаем данные из БД
 app.get('/api/getdata', (req, res) => {
   const query = 'SELECT * FROM `users`'
 
@@ -39,6 +51,7 @@ app.get('/api/getdata', (req, res) => {
   })
 })
 
+// Запускаем сервер
 app.listen(port, () => {
   console.log(`Сервер успешно запущен на порту ${port}`);
 })
