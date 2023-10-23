@@ -2,11 +2,16 @@
   "name": "db_for_uggu",
   "version": "1.0.0",
   "description": "Репо для задач по предмету, управление данными",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node main.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.2",
+    "sequelize": "^6.33.0"
+  }
 }
