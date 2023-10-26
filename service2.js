@@ -14,21 +14,48 @@ const warehouse = {
 };
 
 app.get('/', (req, res) => {
-  res.send('Server is running!')
+  res.send('Сервис 2: Хранилище товаров работает!')
 })
 
-// Обработка запроса на проверку наличия товара
-app.post('/check_availability', (req, res) => {
-  const requestData = req.body;
+const pendingRequests = {}; // Переменная определена здесь
 
-  const { productName, quantity } = requestData;
 
-  if (warehouse[productName] && warehouse[productName] >= quantity) {
-    res.json({ available: true });
-  } else {
-    res.json({ available: false });
+app.post('/check_availability', async (req, res) => {
+  const { requestId, data } = req.body;
+
+  try {
+    // Имитация асинхронной операции
+    await performAsyncOperation();
+
+    if (data && data.productName && data.quantity && warehouse[data.productName] >= data.quantity) {
+      // Обновляем статус запроса на Сервисе 1
+      if (requestId && pendingRequests[requestId]) {
+        pendingRequests[requestId].status = 'completed';
+      }
+      res.json({ available: true });
+    } else {
+      // Обновляем статус запроса на Сервисе 1
+      if (requestId && pendingRequests[requestId]) {
+        pendingRequests[requestId].status = 'failed';
+      }
+      res.json({ available: false });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Ошибка при обработке запроса' });
   }
 });
+
+
+
+
+// Функция, имитирующая асинхронную операцию
+async function performAsyncOperation() {
+  return new Promise((resolve) => {
+    setTimeout(resolve, 20000); // Имитация задержки в 1 секунду
+  });
+}
+
 
 app.listen(port, () => {
   console.log(`Сервис 2 запущен на порту ${port}`);
